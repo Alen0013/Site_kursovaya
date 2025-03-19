@@ -16,6 +16,7 @@
     background-color: green; /* Фон навигационного меню */
     margin: 0; /* Убираем маргины, чтобы использовать padding */
     padding: 10px 0; /* Отступы сверху и снизу */
+    text-wrap: nowrap;
 }
 .nav-link {
     font-size: 30px; /* Размер текста для навигационных ссылок в vw */
