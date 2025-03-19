@@ -1,0 +1,61 @@
+.logo {
+    width: 20vw;  /* Логотип занимает 20% ширины окна */
+    max-width: 250px; /* Максимальный размер логотипа */
+    height: auto; /* Сохраняет пропорции */
+}
+.custom-padding { 
+    padding-top: 40px; /* Отступ сверху */
+    padding-left: 5%; /* Отступ слева в % для адаптивности */
+}
+.hh11 {
+    color: grey;
+    font-size: 2vw; /* Размер шрифта в vw для адаптивности */
+    padding-right: 5%; /* Отступ справа в % */
+}
+.main-nav {
+    background-color: green; /* Фон навигационного меню */
+    margin: 0; /* Убираем маргины, чтобы использовать padding */
+    padding: 10px 0; /* Отступы сверху и снизу */
+}
+.nav-link {
+    font-size: 30px; /* Размер текста для навигационных ссылок в vw */
+    color: white; /* Цвет текста */
+    padding: 0 10px; /* Отступы слева и справа */
+    margin-left: 80px;
+}
+.nav-link:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+.navbar-brand {
+    font-size: 30px; /* Размер текста для "Главная" в vw */
+    margin-left: 50px; /* Отступ слева в % */
+}
+.gallery img {
+    width: 100%; /* Ширина изображения 100% от контейнера */
+    height: 240px; /* Фиксированная высота */
+    object-fit: cover; /* Заполнение контейнера, сохранение пропорций в пределах области */
+    margin-bottom: 15px; /* Отступ между изображениями */
+    transition: transform 0.3s; /* Плавный эффект масштабирования */
+}
+.gallery img:hover {
+    transform: scale(1.1); /* Увеличение изображения на 10% при наведении */
+}
+.broni {
+    text-align: center;
+    font-size: 40px;
+}
+.btn {
+    background-color: green;
+    width: 250px;
+    height: 50px;
+    border-radius: 20px;
+    border-color: green;
+}
+.center {
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    margin-top: 20px; /* Отступ сверху для кнопки */
+}
+footer {
+    background-color: rgb(50, 60, 73);
+}

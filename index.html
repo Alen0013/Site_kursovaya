@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+    <title>Академия Бильярда</title>
+    <style>
+        
+        .logo {
+            width: 15vw;  /* Логотип занимает 15% ширины окна */
+            max-width: 200px; /* Максимальный размер логотипа */
+            height: auto; /* Сохраняет пропорции */
+        }
+        .custom-padding { 
+            padding-top: 30px; /* Отступ сверху */
+            padding-left: 5%; /* Отступ слева в % для адаптивности */
+        }
+        .hh11 {
+            color: grey;
+            font-size: 1.5vw; /* Размер шрифта адаптирован */
+            padding-right: 5%; /* Отступ справа в % */
+        }
+        .main-nav {
+            background-color: green; /* Фон навигационного меню */
+            margin: 0; /* Убираем маргины, чтобы использовать padding */
+            padding: 8px 0; /* Уменьшенные отступы сверху и снизу */
+        }
+        .nav-link {
+            font-size: 1.5vw; /* Размер текста для навигационных ссылок */
+            color: white; /* Цвет текста */
+            padding: 0 10px; /* Отступы слева и справа */
+            margin-left: 1vw; /* Отступ слева в vw */
+        }
+        .nav-link:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+        .navbar-brand {
+            font-size: 1.5vw; /* Размер текста для "Главная" */
+            margin-left: 1vw; /* Отступ слева в vw */
+        }
+        .gallery img {
+            width: 100%; /* Ширина изображения 100% от контейнера */
+            height: auto; /* Автоматическая высота для сохранения пропорций */
+            max-height: 240px; /* Максимальная высота */
+            object-fit: cover; /* Заполнение контейнера, сохранение пропорций в пределах области */
+            margin-bottom: 15px; /* Отступ между изображениями */
+            transition: transform 0.3s; /* Плавный эффект масштабирования */
+        }
+        .gallery img:hover {
+            transform: scale(1.05); /* Увеличение изображения при наведении */
+        }
+        .broni {
+            text-align: center;
+            font-size: 3vw; /* Размер шрифта адаптирован */
+        }
+        .btn {
+            background-color: green;
+            width: 100%; /* Ширина кнопки 100% на маленьких экранах */
+            max-width: 250px; /* Максимальная ширина кнопки */
+            height: 50px;
+            border-radius: 20px;
+            border-color: green;
+        }
+        .center {
+            display: flex;
+            justify-content: center; /* Центрирование по горизонтали */
+            margin-top: 20px; /* Отступ сверху для кнопки */
+        }
+        footer {
+            background-color: rgb(50, 60, 73);
+        }
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+        }
+        /* Стиль для кнопки бургер-меню */
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        .navbar-toggler {
+            border-color: white; /* Белая рамка для кнопки */
+        }
+        @media (max-width: 768px) {
+            .nav-link, .navbar-brand {
+                font-size: 4vw; /* Увеличиваем размер шрифта на маленьких экранах */
+            }
+            .hh11 {
+                font-size: 3vw; /* Увеличиваем размер шрифта на маленьких экранах */
+            }
+            .broni {
+                font-size: 5vw; /* Увеличиваем размер шрифта на маленьких экранах */
+            }
+            .gallery img {
+                max-height: 150px; /* Уменьшаем высоту изображений на маленьких экранах */
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container-fluid custom-padding">
+        <div class="row align-items-center">
+            <div class="col-4 d-flex align-items-center">
+                <a href="#">
+                    <img src="logo.png" class="logo" alt="Логотип">
+                </a>
+            </div>
+            <div class="col-4">
+                <nav class="navbar navbar-expand-lg main-nav">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-white active" aria-current="page" href="#trainings">Тренировки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#booking">Бронирование</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="#prices">Цены</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-4 text-right">
+                <h1 class="m-0 hh11">8-919-354-52-02<br><br> Челябинск, ул.Академика Королева 3</h1>
+            </div>
+        </div>
+    </div>
+</header>
+<br><br><br>
+<main>
+    <div class="container mt-4 gallery" id="trainings">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="4.png" alt="Изображение 1">
+            </div>
+            <div class="col-md-4">
+                <img src="22.JPG" alt="Изображение 2">
+            </div>
+            <div class="col-md-4">
+                <img src="2.JPG" alt="Изображение 3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="44.JPG" alt="Изображение 4">
+            </div>
+            <div class="col-md-4">
+                <img src="3.JPG" alt="Изображение 5">
+            </div>
+            <div class="col-md-4">
+                <img src="1.JPG" alt="Изображение 6">
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center"> 
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#booking">Бронирование</a>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <p class="broni" id="booking">Заявка на аренду зала</p>
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Имя</label>
+                <input type="text" class="form-control" id="name" placeholder="Введите Имя" required>
+            </div>
+            <div class="form-group">
+                <label for="surname">Фамилия</label>
+                <input type="text" class="form-control" id="surname" placeholder="Введите Фамилию" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email адрес</label>
+                <input type="email" class="form-control" id="email" placeholder="Введите email" required>
+                <small id="emailHelp" class="form-text text-muted">Пожалуйста, введите свой Email-адрес.</small>
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="text" class="form-control" id="phone" placeholder="Введите номер телефона">
+                <small id="phoneHelp" class="form-text text-muted">Необязательно - мы никогда не используем это для маркетинга.</small>
+            </div>
+            <br>
+            <div class="center">
+                <button type="submit" class="btn btn-primary">Сохранить и Отправить</button>
+            </div>
+            <br>
+            <div class="center">
+                <img src="66.JPG" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
+            </div>
+            <br><br>
+        </form>
+    </div>
+    
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center"> 
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#trainings">Тренировки</a>
+            </div>
+        </div>
+    </nav><br>
+    <div class="center">
+        <img src="77.png" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
+    </div><br><br>
+    
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center"> 
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#prices">Цены</a>
+            </div>
+        </div>
+    </nav>
+    <div class="center" id="prices">
+        <img src="88.png" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
+    </div><br><br>
+    <div class="center">
+        <img src="100.PNG" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
+    </div><br><br>
+</main>
+<footer>
+    <div class="container-fluid custom-padding">
+        <div class="row align-items-center">
+            <div class="col-md-4 d-flex justify-content-start align-items-center">
+                <a href="#">
+                    <img src="logo.png" class="logo" alt="Логотип">
+                </a>
+            </div>
+            <div class="col-md-4 text-center">
+                <h1 class="m-0 hh11">8-919-354-52-02,<br><br>Бесплатный звонок по всей России</h1>
+            </div>
+            <div class="col-md-4 d-flex justify-content-end">
+                <div class="social-icons">
+                    <a href="#" class="text-dark mx-2">
+                        <img src="icons8-vk-com-24.png" alt="VK">
+                    </a>
+                    <a href="#" class="text-dark mx-2">
+                        <img src="icons8-instagram-48.png" alt="Instagram">
+                    </a>
+                    <a href="#" class="text-dark mx-2">
+                        <img src="icons8-viber-50.png" alt="Viber">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
