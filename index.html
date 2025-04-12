@@ -1,274 +1,956 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Установка кодировки и адаптивного масштабирования -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <!-- Подключение Bootstrap CSS для стилизации и адаптивности -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-
+    <!-- Подключение шрифтов Google Fonts для элегантного оформления -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Подключение Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Академия Бильярда</title>
     <style>
-        
+        /* Определение цветовых переменных для консистентности */
+        :root {
+            --main-color: #006400; /* Темно-зеленый цвет для основного оформления */
+            --accent-color: #FFD700; /* Золотой цвет для акцентов */
+        }
+
+        /* Настройка базовых стилей для HTML и body */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* Основной шрифт */
+            background-image: url('image.png'); /* Фоновое изображение */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Фиксированный фон */
+            position: relative;
+            display: flex;
+            flex-direction: column; /* Для правильного размещения футера */
+        }
+
+        /* Затемнение фона для улучшения читаемости текста */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Полупрозрачное затемнение */
+            z-index: 0;
+        }
+
+        /* Обертка контента с полупрозрачным фоном */
+        .content-wrapper {
+            background-color: rgba(255, 255, 255, 0.7); /* Полупрозрачный белый фон */
+            flex: 1 0 auto; /* Растягивается, но не сжимается */
+            position: relative;
+            z-index: 1; /* Над затемнением фона */
+        }
+
+        /* Стили для логотипа */
         .logo {
-            width: 15vw;  /* Логотип занимает 15% ширины окна */
-            max-width: 200px; /* Максимальный размер логотипа */
-            height: auto; /* Сохраняет пропорции */
+            width: 20vw;
+            max-width: 250px;
+            height: auto;
+            transition: transform 0.3s; /* Плавное вращение при наведении */
         }
-        .custom-padding { 
-            padding-top: 30px; /* Отступ сверху */
-            padding-left: 5%; /* Отступ слева в % для адаптивности */
+
+        .logo:hover {
+            transform: rotate(-5deg); /* Легкий поворот логотипа */
         }
-        .hh11 {
-            color: grey;
-            font-size: 1.5vw; /* Размер шрифта адаптирован */
-            padding-right: 5%; /* Отступ справа в % */
+
+        /* Отступы для заголовка */
+        .custom-padding {
+            padding-top: 40px;
+            padding-left: 5%;
         }
+
+        /* Стили для контактной информации */
+        .contact-info {
+            color: #333;
+            font-size: 1.2rem;
+            text-align: right;
+            white-space: nowrap;
+            padding-right: 20px;
+        }
+
+        /* Стили для блока контактов в заголовке */
+        .header-contact-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        /* Стили для контейнера карты в заголовке */
+        .header-map-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .header-map-container:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px); /* Легкий подъем при наведении */
+        }
+
+        .header-map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Стили для основного навигационного меню */
         .main-nav {
-            background-color: green; /* Фон навигационного меню */
-            margin: 0; /* Убираем маргины, чтобы использовать padding */
-            padding: 8px 0; /* Уменьшенные отступы сверху и снизу */
+            background: var(--main-color); /* Темно-зеленый фон */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            border-radius: 15px;
         }
+
         .nav-link {
-            font-size: 1.5vw; /* Размер текста для навигационных ссылок */
-            color: white; /* Цвет текста */
-            padding: 0 10px; /* Отступы слева и справа */
-            margin-left: 1vw; /* Отступ слева в vw */
+            font-size: 1.2rem;
+            color: white !important;
+            position: relative;
+            padding: 10px 20px !important;
+            transition: all 0.3s; /* Плавные переходы */
         }
-        .nav-link:hover {
-            text-decoration: underline; /* Подчеркивание при наведении */
+
+        /* Эффект подчеркивания при наведении на ссылки */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s;
         }
-        .navbar-brand {
-            font-size: 1.5vw; /* Размер текста для "Главная" */
-            margin-left: 1vw; /* Отступ слева в vw */
+
+        .nav-link:hover::after {
+            width: 80%;
+            left: 10%;
         }
+
+        /* Стили для галереи изображений */
         .gallery img {
-            width: 100%; /* Ширина изображения 100% от контейнера */
-            height: auto; /* Автоматическая высота для сохранения пропорций */
-            max-height: 240px; /* Максимальная высота */
-            object-fit: cover; /* Заполнение контейнера, сохранение пропорций в пределах области */
-            margin-bottom: 15px; /* Отступ между изображениями */
-            transition: transform 0.3s; /* Плавный эффект масштабирования */
+            width: 100%;
+            height: 240px;
+            object-fit: cover; /* Изображения заполняют контейнер */
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
         .gallery img:hover {
-            transform: scale(1.05); /* Увеличение изображения при наведении */
+            transform: scale(1.05); /* Увеличение при наведении */
         }
-        .broni {
+
+        /* Стили для заголовков секций */
+        .section-title {
+            font-family: 'Playfair Display', serif;
             text-align: center;
-            font-size: 3vw; /* Размер шрифта адаптирован */
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--main-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
         }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 15px auto;
+        }
+
+        /* Стили для кнопок */
         .btn {
             background-color: green;
-            width: 100%; /* Ширина кнопки 100% на маленьких экранах */
-            max-width: 250px; /* Максимальная ширина кнопки */
+            width: 250px;
             height: 50px;
             border-radius: 20px;
             border-color: green;
+            font-weight: bold;
         }
+
+        /* Центрирование элементов */
         .center {
             display: flex;
-            justify-content: center; /* Центрирование по горизонтали */
-            margin-top: 20px; /* Отступ сверху для кнопки */
+            justify-content: center;
+            margin-top: 20px;
         }
-        footer {
-            background-color: rgb(50, 60, 73);
+
+        /* Стили для формы бронирования */
+        .booking-form {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            margin: 0 auto;
+            max-width: 800px;
         }
-        .social-icons img {
-            width: 24px;
-            height: 24px;
+
+        /* Стили для секции цен */
+        .prices-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
         }
-        /* Стиль для кнопки бургер-меню */
+
+        /* Стили для бургер-меню */
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
+
         .navbar-toggler {
-            border-color: white; /* Белая рамка для кнопки */
+            border-color: white;
         }
+
+        /* Стили для карусели тренировок */
+        .trainings-carousel-section {
+            padding: 60px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            margin: 30px auto;
+            max-width: 1200px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .carousel-img {
+            width: 675px; /* Фиксированная ширина изображения */
+            height: 953px; /* Фиксированная высота */
+            border-radius: 8px;
+            filter: brightness(0.9);
+            transition: filter 0.3s ease;
+            display: block;
+            margin: 0 auto; /* Центрирование изображения */
+        }
+
+        .carousel-item:hover .carousel-img {
+            filter: brightness(1); /* Увеличение яркости при наведении */
+        }
+
+        /* Стили для надписей в карусели */
+        .carousel-caption {
+            background: rgba(0, 100, 0, 0.8); /* Темно-зеленый полупрозрачный фон */
+            border-radius: 12px;
+            padding: 15px 20px;
+            width: 80%; /* Ограничение ширины надписи */
+            max-width: 540px; /* 80% от ширины изображения */
+            bottom: 0; /* Надпись внизу изображения */
+            left: 50%;
+            transform: translateX(-50%); /* Центрирование по горизонтали */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .carousel-caption:hover {
+            background: rgba(0, 100, 0, 0.9);
+            transform: translateX(-50%) translateY(-5px); /* Подъем при наведении */
+        }
+
+        .carousel-caption h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .carousel-caption p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            color: #fff;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        /* Стили для индикаторов карусели */
+        .carousel-indicators {
+            bottom: -50px;
+        }
+
+        .carousel-indicators li {
+            background-color: var(--main-color);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-indicators .active {
+            background-color: var(--accent-color);
+        }
+
+        /* Стили для стрелок управления каруселью */
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: var(--main-color);
+            border-radius: 50%;
+            padding: 20px;
+            background-size: 50%;
+            background-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-control-prev:hover .carousel-control-prev-icon,
+        .carousel-control-next:hover .carousel-control-next-icon {
+            transform: scale(1.2); /* Увеличение при наведении */
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 10%;
+            opacity: 0.8;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+        /* Стили для футера */
+        footer {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%); /* Градиентный фон */
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            flex-shrink: 0; /* Не сжимается */
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-logo {
+            max-width: 180px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease, filter 0.3s ease;
+            margin-left: -10px;
+        }
+
+        .footer-logo:hover {
+            transform: scale(1.05) rotate(-3deg); /* Эффект при наведении */
+            filter: drop-shadow(0 4px 8px rgba(255,215,0,0.4));
+        }
+
+        .footer-slogan {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .footer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-title::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            margin-top: 8px;
+            position: absolute;
+            left: 0;
+        }
+
+        .footer-map {
+            height: 160px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+
+        .footer-map:hover {
+            transform: translateY(-5px); /* Подъем при наведении */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .footer-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .footer-contacts {
+            color: #fff;
+            line-height: 2;
+        }
+
+        .footer-contacts i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        .footer-contacts a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contacts a:hover {
+            color: var(--accent-color); /* Золотой цвет при наведении */
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: flex-end;
+            gap: 35px;
+            padding-right: 0;
+            margin-left: auto;
+        }
+
+        .footer-social-icon {
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s ease;
+            filter: brightness(0.9);
+        }
+
+        .footer-social-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: brightness(1.3) drop-shadow(0 3px 6px rgba(255,215,0,0.4));
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .footer-divider {
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,215,0,0.5), transparent);
+            margin: 0 auto 25px;
+        }
+
+        .footer-copyright {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Адаптивные стили */
+        /* Для экранов шириной менее 1865px меню мгновенно превращается в бургер-меню */
+        @media (max-width: 1865px) {
+            .navbar-nav {
+                background-color: var(--main-color); /* Фон для бургер-меню */
+                border-radius: 10px;
+                padding: 10px;
+            }
+            .nav-link {
+                text-align: center; /* Центрирование ссылок в бургер-меню */
+                padding: 10px 0 !important;
+            }
+            /* Сохранение исходного размера шрифта для ссылок */
+            .nav-link {
+                font-size: 1.2rem; /* Без уменьшения текста */
+            }
+            .header-contact-block {
+                align-items: center;
+                margin-top: 15px;
+            }
+            .header-map-container {
+                height: 150px;
+                max-width: 300px;
+            }
+        }
+
+        /* Для планшетов (ширина до 992px) */
+        @media (max-width: 992px) {
+            .contact-info {
+                font-size: 1rem;
+                padding-right: 10px;
+            }
+            .carousel-img {
+                width: 500px; /* Уменьшение размера изображения */
+                height: 705px; /* Сохранение пропорций */
+            }
+            .carousel-caption {
+                width: 80%;
+                max-width: 400px; /* 80% от ширины изображения */
+                padding: 12px 15px;
+            }
+            .carousel-caption h5 {
+                font-size: 1.4rem;
+            }
+            .carousel-caption p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Для маленьких планшетов (ширина до 768px) */
         @media (max-width: 768px) {
-            .nav-link, .navbar-brand {
-                font-size: 4vw; /* Увеличиваем размер шрифта на маленьких экранах */
+            .logo {
+                width: 150px;
             }
-            .hh11 {
-                font-size: 3vw; /* Увеличиваем размер шрифта на маленьких экранах */
+            .contact-info {
+                font-size: 0.9rem;
+                white-space: normal;
+                text-align: center;
+                padding: 10px 0;
             }
-            .broni {
-                font-size: 5vw; /* Увеличиваем размер шрифта на маленьких экранах */
+            .section-title {
+                font-size: 1.8rem;
             }
             .gallery img {
-                max-height: 150px; /* Уменьшаем высоту изображений на маленьких экранах */
+                height: 180px;
+            }
+            .nav-link, .navbar-brand {
+                font-size: 1.2rem; /* Сохранение размера текста */
+            }
+            body {
+                background-attachment: scroll; /* Отключение фиксированного фона */
+            }
+            .prices-section, .booking-form {
+                padding: 20px;
+            }
+            .carousel-img {
+                width: 400px;
+                height: 564px; /* Сохранение пропорций */
+            }
+            .carousel-caption {
+                width: 80%;
+                max-width: 320px; /* 80% от ширины изображения */
+                padding: 10px 12px;
+            }
+            .carousel-caption h5 {
+                font-size: 1.2rem;
+            }
+            .carousel-caption p {
+                font-size: 0.8rem;
+            }
+            .trainings-carousel-section {
+                padding: 40px 0;
+            }
+        }
+
+        /* Для мобильных устройств (ширина до 576px) */
+        @media (max-width: 576px) {
+            .contact-info {
+                font-size: 0.8rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .gallery img {
+                height: 150px;
+            }
+            .carousel-img {
+                width: 300px;
+                height: 423px; /* Сохранение пропорций */
+            }
+            .carousel-caption {
+                width: 80%;
+                max-width: 240px; /* 80% от ширины изображения */
+                padding: 8px 10px;
+            }
+            .carousel-caption h5 {
+                font-size: 1rem;
+            }
+            .carousel-caption p {
+                font-size: 0.7rem;
+            }
+            .carousel-indicators {
+                bottom: -40px;
+            }
+        }
+
+        /* Адаптивность футера */
+        @media (max-width: 992px) {
+            .footer-logo {
+                margin-left: 0;
+                margin-bottom: 30px;
+            }
+            .footer-map {
+                height: 180px;
+            }
+            .footer-social {
+                justify-content: center;
+                margin-top: 30px;
+                margin-left: 0;
+            }
+            .footer-contacts, .footer-social {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-title {
+                font-size: 1.3rem;
+            }
+            .footer-map {
+                height: 140px;
+            }
+            .footer-social-icon {
+                width: 36px;
+                height: 36px;
             }
         }
     </style>
 </head>
 <body>
-<header>
-    <div class="container-fluid custom-padding">
-        <div class="row align-items-center">
-            <div class="col">
-                <a href="#">
-                    <img src="logo.png" class="logo" alt="Логотип">
-                </a>
-            </div>
-            <div class="col">
-                <nav class="navbar navbar-expand-lg main-nav">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-white active" aria-current="page" href="#trainings">Тренировки</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#booking">Бронирование</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#prices">Цены</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#kitchen">Кухня</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="about-us.html">О нас</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="tournaments.html">Турниры</a>
-                            </li>
-                        </ul>
+    <!-- Основной контейнер контента -->
+    <div class="content-wrapper">
+        <!-- Заголовок сайта -->
+        <header>
+            <div class="container-fluid custom-padding">
+                <div class="row align-items-center">
+                    <!-- Логотип -->
+                    <div class="col-md-3">
+                        <a href="index.html">
+                            <img src="logo.png" class="logo" alt="Логотип">
+                        </a>
                     </div>
-                </nav>
+                    <!-- Навигационное меню -->
+                    <div class="col-md-6">
+                        <!-- Используем navbar-expand-custom для сворачивания меню при ширине менее 1865px -->
+                        <nav class="navbar navbar-expand-custom main-nav">
+                            <!-- Кнопка бургер-меню для мобильных устройств -->
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <!-- Список навигационных ссылок -->
+                            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                <ul class="navbar-nav mx-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="index.html">Главная</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#trainings">Тренировки</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#booking">Бронирование</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#prices">Цены</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#kitchen">Кухня</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="about-us.html">О нас</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="tournaments.html">Турниры</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- Контактная информация -->
+                    <div class="col-md-3">
+                        <div class="header-contact-block">
+                            <div class="contact-info">
+                                8-919-354-52-02<br>Челябинск, ул.Академика Королева 3
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col text-right">
-                <h1 class="m-0 hh11">8-919-354-52-02<br><br> Челябинск, ул.Академика Королева 3</h1>
-            </div>
-        </div>
-    </div>
-</header>
-<br><br><br>
-<main>
-    <div class="container mt-4 gallery" id="trainings">
-        <div class="row">
-            <div class="col-md-4">
-                <img src="4.png" alt="Изображение 1">
-            </div>
-            <div class="col-md-4">
-                <img src="22.JPG" alt="Изображение 2">
-            </div>
-            <div class="col-md-4">
-                <img src="2.JPG" alt="Изображение 3">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="44.JPG" alt="Изображение 4">
-            </div>
-            <div class="col-md-4">
-                <img src="3.JPG" alt="Изображение 5">
-            </div>
-            <div class="col-md-4">
-                <img src="1.JPG" alt="Изображение 6">
-            </div>
-        </div>
-    </div>
+        </header>
+        <br><br><br>
 
-    <br><br>
-    <nav class="navbar navbar-expand-lg main-nav">
-        <div class="container text-center"> 
-            <div class="w-100">
-                <a class="navbar-brand text-white" href="#booking">Бронирование</a>
+        <!-- Секция галереи -->
+        <section id="trainings">
+            <div class="container mt-4 gallery">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="77.JPG" alt="Изображение 1">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="child.jpg" alt="Изображение 2">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="2.JPG" alt="Изображение 3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="44.JPG" alt="Изображение 4">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="3.JPG" alt="Изображение 5">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="pool.JPG" alt="Изображение 6">
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>
-    <br><br><br>
-    <p class="broni" id="booking">Заявка на аренду зала</p>
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Имя</label>
-                <input type="text" class="form-control" id="name" placeholder="Введите Имя" required>
+        </section>
+
+        <!-- Навигационная ссылка на бронирование -->
+        <nav class="navbar navbar-expand-lg main-nav">
+            <div class="container text-center">
+                <div class="w-100">
+                    <a class="navbar-brand text-white" href="#booking">Бронирование</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="surname">Фамилия</label>
-                <input type="text" class="form-control" id="surname" placeholder="Введите Фамилию" required>
+        </nav>
+
+        <!-- Секция бронирования -->
+        <section id="booking">
+            <h2 class="section-title">Заявка на аренду стола</h2>
+            <div class="container">
+                <div class="booking-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" class="form-control" id="name" placeholder="Введите Имя" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Фамилия</label>
+                            <input type="text" class="form-control" id="surname" placeholder="Введите Фамилию" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billiard-type">Тип бильярда</label>
+                            <select class="form-control" id="billiard-type" required>
+                                <option value="" disabled selected>Выберите тип бильярда</option>
+                                <option value="russian">Русский бильярд</option>
+                                <option value="american">Американский пул</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Номер телефона</label>
+                            <input type="text" class="form-control" id="phone" placeholder="Введите номер телефона">
+                            <small id="phoneHelp" class="form-text text-muted">Обязательно - мы никогда не используем это для маркетинга.</small>
+                        </div>
+                        <br>
+                        <div class="center">
+                            <button type="submit" class="btn btn-primary">Сохранить и Отправить</button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <div class="center">
+                    <img src="66.JPG" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                </div>
+                <br><br>
             </div>
-            <div class="form-group">
-                <label for="email">Email адрес</label>
-                <input type="email" class="form-control" id="email" placeholder="Введите email" required>
-                <small id="emailHelp" class="form-text text-muted">Пожалуйста, введите свой Email-адрес.</small>
+        </section>
+
+        <!-- Навигационная ссылка на цены -->
+        <nav class="navbar navbar-expand-lg main-nav">
+            <div class="container text-center">
+                <div class="w-100">
+                    <a class="navbar-brand text-white" href="#prices">Цены</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="phone">Номер телефона</label>
-                <input type="text" class="form-control" id="phone" placeholder="Введите номер телефона">
-                <small id="phoneHelp" class="form-text text-muted">Необязательно - мы никогда не используем это для маркетинга.</small>
+        </nav>
+
+        <!-- Секция цен -->
+        <section id="prices">
+            <h2 class="section-title">Наши цены</h2>
+            <div class="container">
+                <div class="prices-section">
+                    <div class="center">
+                        <img src="88.png" alt="Цены на услуги" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px;">
+                    </div>
+                    <br><br>
+                    <div class="center">
+                        <img src="100.PNG" alt="Дополнительная информация" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px;">
+                    </div>
+                </div>
             </div>
-            <br>
-            <div class="center">
-                <button type="submit" class="btn btn-primary">Сохранить и Отправить</button>
+        </section>
+
+        <!-- Навигационная ссылка на тренировки -->
+        <nav class="navbar navbar-expand-lg main-nav">
+            <div class="container text-center">
+                <div class="w-100">
+                    <a class="navbar-brand text-white" href="#trainings">Тренировки</a>
+                </div>
             </div>
-            <br>
-            <div class="center">
-                <img src="66.JPG" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
-            </div>
-            <br><br>
-        </form>
-    </div>
-    
-    <nav class="navbar navbar-expand-lg main-nav">
-        <div class="container text-center"> 
-            <div class="w-100">
-                <a class="navbar-brand text-white" href="#trainings">Тренировки</a>
-            </div>
-        </div>
-    </nav><br>
-    <div class="center">
-        <img src="77.png" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
-    </div><br><br>
-    
-    <nav class="navbar navbar-expand-lg main-nav">
-        <div class="container text-center"> 
-            <div class="w-100">
-                <a class="navbar-brand text-white" href="#prices">Цены</a>
-            </div>
-        </div>
-    </nav>
-    <div class="center" id="prices">
-        <img src="88.png" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
-    </div><br><br>
-    <div class="center">
-        <img src="100.PNG" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto;">
-    </div><br><br>
-</main>
-<footer>
-    <div class="container-fluid custom-padding">
-        <div class="row align-items-center">
-            <div class="col-md-4 d-flex justify-content-start align-items-center">
-                <a href="#">
-                    <img src="logo.png" class="logo" alt="Логотип">
-                </a>
-            </div>
-            <div class="col-md-4 text-center">
-                <h1 class="m-0 hh11">8-919-354-52-02,<br><br>Бесплатный звонок по всей России</h1>
-            </div>
-            <div class="col-md-4 d-flex justify-content-end">
-                <div class="social-icons">
-                    <a href="#" class="text-dark mx-2">
-                        <img src="icons8-vk-com-24.png" alt="VK">
+        </nav>
+
+        <!-- Секция карусели тренировок -->
+        <section id="trainingCarouselSection" class="trainings-carousel-section">
+            <div class="container">
+                <h2 class="section-title">Наши тренера</h2>
+                <div id="trainingCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Индикаторы карусели -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#trainingCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#trainingCarousel" data-slide-to="1"></li>
+                        <li data-target="#trainingCarousel" data-slide-to="2"></li>
+                        <li data-target="#trainingCarousel" data-slide-to="3"></li>
+                    </ol>
+                    <!-- Слайды карусели -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="1tren.png" class="d-block carousel-img" alt="Тренировка 1">
+                            <div class="carousel-caption">
+                                <h5>Обучение бильярду для всех возрастов</h5>
+                                <p>Профессиональные тренировки от Академии Бильярда!</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="3tren.png" class="d-block carousel-img" alt="Тренировка 2">
+                            <div class="carousel-caption">
+                                <h5>Мастер-классы от чемпионов</h5>
+                                <p>Учите техники от лучших игроков!</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="4tren.png" class="d-block carousel-img" alt="Тренировка 3">
+                            <div class="carousel-caption">
+                                <h5>Групповые тренировки</h5>
+                                <p>Занимайтесь с друзьями и достигайте новых высот!</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="77.png" class="d-block carousel-img" alt="Тренировка 4">
+                            <div class="carousel-caption">
+                                <h5>Индивидуальный подход</h5>
+                                <p>Персональные уроки для вашего уровня!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Управление каруселью -->
+                    <a class="carousel-control-prev" href="#trainingCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Предыдущий</span>
                     </a>
-                    <a href="#" class="text-dark mx-2">
-                        <img src="icons8-instagram-48.png" alt="Instagram">
-                    </a>
-                    <a href="#" class="text-dark mx-2">
-                        <img src="icons8-viber-50.png" alt="Viber">
+                    <a class="carousel-control-next" href="#trainingCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Следующий</span>
                     </a>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-    <br>
-</footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Футер сайта -->
+    <footer>
+        <div class="footer-container">
+            <div class="row align-items-start">
+                <!-- Логотип футера -->
+                <div class="col-lg-3 col-md-4 col-12 text-center text-lg-left pl-0 pr-0 mb-5">
+                    <a href="index.html">
+                        <img src="logo.png" class="footer-logo" alt="Логотип">
+                    </a>
+                    <p class="footer-slogan"></p>
+                </div>
+
+                <!-- Карта в футере -->
+                <div class="col-lg-4 col-md-8 mb-5 px-lg-4 px-md-3">
+                    <h4 class="footer-title">Где нас найти</h4>
+                    <div class="footer-map">
+                        <iframe
+                            src="https://yandex.ru/map-widget/v1/?um=constructor%3A123456789abcdef&source=constructor"
+                            width="100%"
+                            height="100%"
+                            frameborder="0"
+                            allowfullscreen
+                            title="Карта расположения Академии Бильярда">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Контактная информация в футере -->
+                <div class="col-lg-3 col-md-6 mb-5 px-lg-4 px-md-3">
+                    <h4 class="footer-title">Контакты</h4>
+                    <div class="footer-contacts">
+                        <div class="mb-3">
+                            <i class="fas fa-phone-alt"></i> <a href="tel:+89193545202">8-919-354-52-02</a>
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-map-marker-alt"></i> Челябинск, ул. Академика Королева 3
+                        </div>
+                        <div>
+                            <i class="fas fa-clock"></i> Ежедневно: 10:00 - 22:00
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Социальные сети -->
+                <div class="col-lg-2 col-md-6 px-lg-4 px-md-3 text-center text-lg-right mb-5">
+                    <h4 class="footer-title">Соц. Сети</h4>
+                    <div class="footer-social">
+                        <a href="https://vk.com/academy174" target="_blank" rel="noopener noreferrer">
+                            <img src="icons8-vk-com-24.png" alt="VK" class="footer-social-icon">
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                            <img src="icons8-instagram-48.png" alt="Instagram" class="footer-social-icon">
+                        </a>
+                        <a href="https://t.me/academy_billiards" target="_blank" rel="noopener noreferrer">
+                            <img src="icons8-телеграм-48.png" alt="Telegram" class="footer-social-icon">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Нижняя часть футера с копирайтом -->
+            <div class="footer-bottom">
+                <div class="footer-divider"></div>
+                <p class="footer-copyright mb-0">
+                    © 2025 Академия Бильярда. Все права защищены
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение скриптов для интерактивности -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Скрипт для кастомного брейкпоинта бургер-меню -->
+    <script>
+        // Добавляем кастомный класс для сворачивания меню при ширине менее 1865px
+        document.addEventListener('DOMContentLoaded', function () {
+            function checkWidth() {
+                const navbar = document.querySelector('.navbar');
+                if (window.innerWidth <= 1865) {
+                    navbar.classList.remove('navbar-expand-lg');
+                    navbar.classList.add('navbar-expand-custom');
+                } else {
+                    navbar.classList.add('navbar-expand-lg');
+                    navbar.classList.remove('navbar-expand-custom');
+                }
+            }
+            checkWidth();
+            window.addEventListener('resize', checkWidth);
+        });
+    </script>
 </body>
 </html>
