@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}О нас - Академия Бильярда{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --main-color: #006400;
+        --accent-color: #FFD700;
+    }
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-image: url('{% static "image/image.png" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+    }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 0;
+    }
+    .content-wrapper {
+        background-color: rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 1;
+    }
+    .logo {
+        width: 20vw;
+        max-width: 250px;
+        height: auto;
+        transition: transform 0.3s;
+    }
+    .logo:hover {
+        transform: rotate(-5deg);
+    }
+    .custom-padding {
+        padding-top: 40px;
+        padding-left: 5%;
+    }
+    .contact-info {
+        color: #333;
+        font-size: 1.2rem;
+        text-align: right;
+        white-space: nowrap;
+        padding-right: 20px;
+    }
+    .main-nav {
+        background: var(--main-color);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin: 20px 0;
+        border-radius: 15px;
+    }
+    .nav-link {
+        font-size: 1.2rem;
+        color: white !important;
+        position: relative;
+        padding: 10px 20px !important;
+        transition: all 0.3s;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: all 0.3s;
+    }
+    .nav-link:hover::after {
+        width: 80%;
+        left: 10%;
+    }
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+    .navbar-toggler {
+        border-color: white;
+    }
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        font-size: 2.8rem;
+        margin: 40px 0;
+        color: var(--main-color);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: var(--accent-color);
+        margin: 15px auto;
+    }
+    .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    .about-content::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 100px;
+        height: 100px;
+        background: var(--accent-color);
+        border-radius: 50%;
+        opacity: 0.1;
+    }
+    .highlight-box {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 30px 0;
+    }
+    .feature-list li {
+        padding: 15px 20px;
+        margin: 15px 0;
+        background: #f8f9fa;
+        border-left: 4px solid var(--main-color);
+        position: relative;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    .feature-list li:hover {
+        transform: translateX(10px);
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    }
+    .feature-list li::before {
+        content: '🎱';
+        margin-right: 15px;
+        font-size: 1.2em;
+    }
+    @media (max-width: 992px) {
+        .contact-info {
+            font-size: 1rem;
+            padding-right: 10px;
+        }
+        .nav-link {
+            font-size: 1rem;
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 768px) {
+        .logo {
+            width: 150px;
+        }
+        .contact-info {
+            font-size: 0.9rem;
+            white-space: normal;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .section-title {
+            font-size: 2rem;
+        }
+        .about-content {
+            padding: 20px;
+        }
+        .feature-list li {
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .nav-link, .navbar-brand {
+            font-size: 0.9rem;
+        }
+        body {
+            background-attachment: scroll;
+        }
+    }
+    @media (max-width: 576px) {
+        .contact-info {
+            font-size: 0.8rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        .feature-list li {
+            padding: 8px 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <header>
+        <div class="container-fluid custom-padding">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <a href="{% url 'index' %}">
+                        <img src="{% static 'image/logo.png' %}" class="logo" alt="Логотип">
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <nav class="navbar navbar-expand-lg main-nav">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav mx-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'index' %}">Главная</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'index' %}#trainings">Тренировки</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'index' %}#booking">Бронирование</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'index' %}#prices">Цены</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'index' %}#kitchen">Кухня</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white active" href="{% url 'about_us' %}">О нас</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'tournaments' %}">Турниры</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-md-3">
+                    <div class="contact-info">
+                        8-919-354-52-02<br>Челябинск, ул.Академика Королева 3
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="about-content">
+        <h1 class="section-title">О нашей академии</h1>
+        <p class="lead">Академия бильярда открылась в 2009 году и за это время стала домом для многих любителей и профессиональных спортсменов бильярдного мира.</p>
+        <div class="highlight-box">
+            <p class="mb-0">Это особое место, где каждый чувствует себя комфортно и хорошо. Нам удалось создать атмосферу, в которой гармонично сочетаются спорт и отдых.</p>
+        </div>
+        <ul class="feature-list">
+            <li>2 зала для игры</li>
+            <li>7 столов русского бильярда</li>
+            <li>3 американского пула</li>
+            <li>Кинозал для просмотра спортивных трансляций, романтических свиданий и закрытых мероприятий</li>
+            <li>Закрытое пространство для праздников с отдельно стоящим американским пулом</li>
+            <li>Закуски и широкий выбор пенного</li>
+            <li>Индивидуальные тренировки для детей и взрослых</li>
+            <li>Дружелюбный персонал</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function checkWidth() {
+            const navbar = document.querySelector('.navbar');
+            if (window.innerWidth <= 1865) {
+                navbar.classList.remove('navbar-expand-lg');
+                navbar.classList.add('navbar-expand-custom');
+            } else {
+                navbar.classList.add('navbar-expand-lg');
+                navbar.classList.remove('navbar-expand-custom');
+            }
+        }
+        checkWidth();
+        window.addEventListener('resize', checkWidth);
+    });
+</script>
+{% endblock %}

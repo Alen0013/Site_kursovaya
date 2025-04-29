@@ -1,0 +1,540 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Турниры - Академия Бильярда{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --main-color: #006400;
+        --accent-color: #FFD700;
+    }
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-image: url('{% static "image/image.png" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+    }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 0;
+    }
+    .content-wrapper {
+        background-color: rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 1;
+    }
+    .gif-background-wrapper {
+        background-image: url('{% static "image/IMG_1267.gif" %}');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+        z-index: 1;
+    }
+    .logo {
+        width: 20vw;
+        max-width: 250px;
+        height: auto;
+        transition: transform 0.3s;
+    }
+    .logo:hover {
+        transform: rotate(-5deg);
+    }
+    .custom-padding {
+        padding-top: 40px;
+        padding-left: 5%;
+    }
+    .contact-info {
+        color: #333;
+        font-size: 1.2rem;
+        text-align: right;
+        white-space: nowrap;
+        padding-right: 20px;
+    }
+    .main-nav {
+        background: var(--main-color);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin: 20px 0;
+        border-radius: 15px;
+    }
+    .nav-link {
+        font-size: 1.2rem;
+        color: white !important;
+        position: relative;
+        padding: 10px 20px !important;
+        transition: all 0.3s;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: all 0.3s;
+    }
+    .nav-link:hover::after {
+        width: 80%;
+        left: 10%;
+    }
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        font-size: 2.5rem;
+        margin: 40px 0;
+        color: var(--main-color);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: var(--accent-color);
+        margin: 15px auto;
+    }
+    .btn {
+        background-color: green;
+        width: 250px;
+        height: 50px;
+        border-radius: 20px;
+        border-color: green;
+        font-weight: bold;
+    }
+    .center {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+    .navbar-toggler {
+        border-color: white;
+    }
+    .tournaments-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .gif-side-container {
+        flex: 1;
+        background-image: url('{% static "image/IMG_1267.gif" %}');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-width: 200px;
+        max-width: 300px;
+    }
+    .tournaments-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    .tournaments-content::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 100px;
+        height: 100px;
+        background: var(--accent-color);
+        border-radius: 50%;
+        opacity: 0.1;
+    }
+    .tournaments-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--main-color);
+        margin-top: 30px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+    .tournaments-content h2::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 2px;
+        background: var(--accent-color);
+        margin: 10px 0;
+    }
+    .tournaments-content p {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        color: #333;
+    }
+    .tournaments-content strong {
+        color: var(--main-color);
+    }
+    /* Стили для модального окна */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        border-radius: 10px;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .modal-content h2 {
+        font-family: 'Playfair Display', serif;
+        color: var(--main-color);
+        margin-bottom: 20px;
+    }
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .modal-content button {
+        background-color: var(--main-color);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .modal-content button:hover {
+        background-color: #004d00;
+    }
+    .error-message {
+        color: red;
+        display: none;
+        margin-top: 10px;
+    }
+    /* Стили для секции бронирований */
+    .bookings-section {
+        display: none;
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .bookings-section table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .bookings-section th, .bookings-section td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    .bookings-section th {
+        background-color: var(--main-color);
+        color: white;
+    }
+    @media (max-width: 992px) {
+        .contact-info {
+            font-size: 1rem;
+            padding-right: 10px;
+        }
+        .nav-link {
+            font-size: 1rem;
+            padding: 0 10px;
+        }
+        .tournaments-wrapper {
+            flex-direction: column;
+            align-items: center;
+        }
+        .gif-side-container {
+            min-height: 200px;
+            max-width: 100%;
+        }
+    }
+    @media (max-width: 768px) {
+        .logo {
+            width: 150px;
+        }
+        .contact-info {
+            font-size: 0.9rem;
+            white-space: normal;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        .nav-link, .navbar-brand {
+            font-size: 0.9rem;
+        }
+        body {
+            background-attachment: scroll;
+        }
+        .gif-background-wrapper {
+            background-attachment: scroll;
+        }
+        .tournaments-content {
+            padding: 20px;
+        }
+    }
+    @media (max-width: 576px) {
+        .contact-info {
+            font-size: 0.8rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="gif-background-wrapper">
+        <header>
+            <div class="container-fluid custom-padding">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static 'image/logo.png' %}" class="logo" alt="Логотип">
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <nav class="navbar navbar-expand-lg main-nav">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                <ul class="navbar-nav mx-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'index' %}">Главная</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'index' %}#trainings">Тренировки</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'index' %}#booking">Бронирование</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'index' %}#prices">Цены</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'index' %}#kitchen">Кухня</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'about_us' %}">О нас</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link text-white" href="{% url 'tournaments' %}">Турниры</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#" id="authButton">Регистрация или Вход</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="contact-info">
+                            8-919-354-52-02<br>Челябинск, ул.Академика Королева 3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+    <br><br><br>
+    <!-- Модальное окно для входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход для администратора</h2>
+            <input type="text" id="username" placeholder="Логин" required>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <button id="loginSubmit">Войти</button>
+            <p id="errorMessage" class="error-message">Неверный логин или пароль</p>
+        </div>
+    </div>
+    <div class="tournaments-wrapper">
+        <div class="gif-side-container"></div>
+        <section class="tournaments-content">
+            <h1 class="section-title">Турниры в Академии Бильярда</h1>
+            <p>В Академии Бильярда регулярно проводятся захватывающие турниры, которые объединяют любителей и профессионалов русского бильярда. Среди самых популярных дисциплин — «Колхоз», «Свободная пирамида», «Комбинированная пирамида» и «Невская пирамида». Каждый турнир — это возможность проверить свои навыки, насладиться азартом и побороться за звание лучшего!</p>
+            <h2>Колхоз</h2>
+            <p><strong>Описание:</strong> Неформальная и увлекательная разновидность русского бильярда, популярная среди любителей за простоту и весёлую атмосферу.</p>
+            <p><strong>Правила:</strong> Используется 16 шаров (15 прицельных и битокс). Игрок может забивать любой шар в любую лузу, но после каждого удара должен коснуться хотя бы одного борта. Победа — за тем, кто забьёт больше шаров (обычно играют по времени). Штрафы минимальны, что делает игру динамичной и доступной.</p>
+            <h2>Свободная пирамида</h2>
+            <p><strong>Описание:</strong> Самая популярная дисциплина русского бильярда, идеальна для новичков и мастеров.</p>
+            <p><strong>Правила:</strong> 15 белых шаров и цветной биток. Игрок может использовать любой шар как биток или прицельный, забивая его в лузу. Удар считается правильным, если шар забит или три шара коснулись борта. Победа — за тем, кто забьёт 8 шаров первым.</p>
+            <h2>Комбинированная пирамида</h2>
+            <p><strong>Описание:</strong> Тактическая игра, требующая точности и стратегии.</p>
+            <p><strong>Правила:</strong> 15 белых шаров и один цветной биток, который остаётся неизменным на протяжении игры. Забивать можно только прицельные шары (белые), используя цветной биток. После забития биток возвращается на стол. Победа — 8 забитых шаров.</p>
+            <h2>Невская пирамида (Динамичная)</h2>
+            <p><strong>Описание:</strong> Быстрая и зрелищная дисциплина, где важна скорость и контроль.</p>
+            <p><strong>Правила:</strong> Аналогична комбинированной, но с ключевым отличием: после забития прицельного шара игрок может выбрать новый биток из оставшихся на столе шаров. Это добавляет динамики и вариантов стратегии. Победа — 8 шаров.</p>
+            <p>Эти турниры в Академии Бильярда — не только соревнования, но и яркие события, где каждый участник может проявить себя. Присоединяйтесь, чтобы испытать азарт и мастерство русского бильярда!</p>
+        </section>
+        <div class="gif-side-container"></div>
+    </div>
+    <!-- Секция с информацией о бронированиях -->
+    <section class="bookings-section" id="bookingsSection">
+        <h1 class="section-title">Информация о бронированиях</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Иван Иванов</td>
+                    <td>2025-05-01</td>
+                    <td>14:00</td>
+                    <td>Подтверждено</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Мария Петрова</td>
+                    <td>2025-05-02</td>
+                    <td>16:00</td>
+                    <td>Ожидает</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Алексей Смирнов</td>
+                    <td>2025-05-03</td>
+                    <td>18:00</td>
+                    <td>Отменено</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Проверка ширины для навигации
+        function checkWidth() {
+            const navbar = document.querySelector('.navbar');
+            if (window.innerWidth <= 1865) {
+                navbar.classList.remove('navbar-expand-lg');
+                navbar.classList.add('navbar-expand-custom');
+            } else {
+                navbar.classList.add('navbar-expand-lg');
+                navbar.classList.remove('navbar-expand-custom');
+            }
+        }
+        checkWidth();
+        window.addEventListener('resize', checkWidth);
+
+        // Элементы для управления модальным окном и входом
+        const authButton = document.getElementById('authButton');
+        const loginModal = document.getElementById('loginModal');
+        const closeModal = document.getElementsByClassName('close')[0];
+        const loginSubmit = document.getElementById('loginSubmit');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+        const bookingsSection = document.getElementById('bookingsSection');
+
+        // Проверка состояния входа при загрузке страницы
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            authButton.textContent = 'Выход';
+            bookingsSection.style.display = 'block';
+        }
+
+        // Открытие модального окна при клике на кнопку
+        authButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (authButton.textContent === 'Выход') {
+                // Выход
+                localStorage.setItem('isLoggedIn', 'false');
+                authButton.textContent = 'Регистрация или Вход';
+                bookingsSection.style.display = 'none';
+            } else {
+                // Открытие модального окна для входа
+                loginModal.style.display = 'block';
+            }
+        });
+
+        // Закрытие модального окна при клике на крестик
+        closeModal.addEventListener('click', function () {
+            loginModal.style.display = 'none';
+            errorMessage.style.display = 'none';
+            usernameInput.value = '';
+            passwordInput.value = '';
+        });
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function (event) {
+            if (event.target == loginModal) {
+                loginModal.style.display = 'none';
+                errorMessage.style.display = 'none';
+                usernameInput.value = '';
+                passwordInput.value = '';
+            }
+        });
+
+        // Обработка входа
+        loginSubmit.addEventListener('click', function () {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            // Простая проверка логина и пароля (захардкодим для примера)
+            if (username === 'admin' && password === 'password123') {
+                localStorage.setItem('isLoggedIn', 'true');
+                authButton.textContent = 'Выход';
+                bookingsSection.style.display = 'block';
+                loginModal.style.display = 'none';
+                errorMessage.style.display = 'none';
+                usernameInput.value = '';
+                passwordInput.value = '';
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        });
+    });
+</script>
+{% endblock %}

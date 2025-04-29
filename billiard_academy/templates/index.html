@@ -1,0 +1,813 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Академия Бильярда{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --main-color: #006400;
+        --accent-color: #FFD700;
+    }
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-image: url('{% static "image/image.png" %}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+    }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 0;
+    }
+    .content-wrapper {
+        background-color: rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 1;
+    }
+    .logo {
+        width: 20vw;
+        max-width: 250px;
+        height: auto;
+        transition: transform 0.3s;
+    }
+    .logo:hover {
+        transform: rotate(-5deg);
+    }
+    .custom-padding {
+        padding-top: 40px;
+        padding-left: 5%;
+    }
+    .contact-info {
+        color: #333;
+        font-size: 1.2rem;
+        text-align: right;
+        white-space: nowrap;
+        padding-right: 20px;
+    }
+    .header-contact-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .header-map-container {
+        width: 100%;
+        height: 180px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        margin-top: 10px;
+        transition: all 0.3s ease;
+    }
+    .header-map-container:hover {
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        transform: translateY(-2px);
+    }
+    .header-map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    .main-nav {
+        background: var(--main-color);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin: 20px 0;
+        border-radius: 15px;
+    }
+    .nav-link {
+        font-size: 1.2rem;
+        color: white !important;
+        position: relative;
+        padding: 10px 20px !important;
+        transition: all 0.3s;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: all 0.3s;
+    }
+    .nav-link:hover::after {
+        width: 80%;
+        left: 10%;
+    }
+    .gallery img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        margin-bottom: 15px;
+        transition: transform 0.3s;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .gallery img:hover {
+        transform: scale(1.05);
+    }
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: var(--main-color);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: var(--accent-color);
+        margin: 15px auto;
+    }
+    .btn {
+        background-color: green;
+        width: 250px;
+        height: 50px;
+        border-radius: 20px;
+        border-color: green;
+        font-weight: bold;
+    }
+    .center {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .booking-form {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        margin: 0 auto;
+        max-width: 800px;
+        border: 2px solid var(--accent-color);
+    }
+    .prices-section {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 10px;
+        margin: 30px auto;
+        max-width: 800px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border: 2px solid var(--accent-color);
+    }
+    .kitchen-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.9));
+        padding: 40px;
+        border-radius: 15px;
+        margin: 30px auto;
+        max-width: 800px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--accent-color);
+        position: relative;
+        overflow: hidden;
+    }
+    .kitchen-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+        z-index: -1;
+    }
+    .kitchen-section p {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.4rem;
+        color: var(--main-color);
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        line-height: 1.5;
+    }
+    .kitchen-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 500px;
+    }
+    .kitchen-section ul li {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.2rem;
+        color: #333;
+        padding: 12px 0;
+        position: relative;
+        padding-left: 40px;
+        transition: all 0.3s ease;
+    }
+    .kitchen-section ul li::before {
+        content: '🍽️';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        color: var(--accent-color);
+    }
+    .kitchen-section ul li:hover {
+        transform: translateX(10px);
+        color: var(--main-color);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+    .navbar-toggler {
+        border-color: white;
+    }
+    .trainings-carousel-section {
+        padding: 60px 0;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        margin: 30px auto;
+        max-width: 1200px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        border: 2px solid var(--accent-color);
+    }
+    .carousel-img {
+        width: 675px;
+        height: 953px;
+        border-radius: 8px;
+        filter: brightness(0.9);
+        transition: filter 0.3s ease;
+        display: block;
+        margin: 0 auto;
+    }
+    .carousel-item:hover .carousel-img {
+        filter: brightness(1);
+    }
+    .carousel-caption {
+        background: rgba(0, 100, 0, 0.8);
+        border-radius: 12px;
+        padding: 15px 20px;
+        width: 80%;
+        max-width: 540px;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .carousel-caption:hover {
+        background: rgba(0, 100, 0, 0.9);
+        transform: translateX(-50%) translateY(-5px);
+    }
+    .carousel-caption h5 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.6rem;
+        color: var(--accent-color);
+        margin-bottom: 8px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        line-height: 1.2;
+        text-align: center;
+    }
+    .carousel-caption p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        color: #fff;
+        margin: 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        line-height: 1.3;
+        text-align: center;
+    }
+    .carousel-indicators {
+        bottom: -50px;
+    }
+    .carousel-indicators li {
+        background-color: var(--main-color);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin: 0 6px;
+        transition: background-color 0.3s ease;
+    }
+    .carousel-indicators .active {
+        background-color: var(--accent-color);
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: var(--main-color);
+        border-radius: 50%;
+        padding: 20px;
+        background-size: 50%;
+        background-position: center;
+        transition: transform 0.3s ease;
+    }
+    .carousel-control-prev:hover .carousel-control-prev-icon,
+    .carousel-control-next:hover .carousel-control-next-icon {
+        transform: scale(1.2);
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 10%;
+        opacity: 0.8;
+    }
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        opacity: 1;
+    }
+    /* Стили для карусели в секции кухни */
+    .kitchen-carousel-section {
+        margin-top: 30px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .kitchen-carousel-img {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transform: perspective(1000px) rotateY(0deg);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+        display: block;
+        margin: 0 auto;
+    }
+    .carousel-item.active .kitchen-carousel-img {
+        transform: perspective(1000px) rotateY(0deg);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+    .carousel-item:not(.active) .kitchen-carousel-img {
+        transform: perspective(1000px) rotateY(10deg);
+    }
+    .kitchen-carousel .carousel-control-prev,
+    .kitchen-carousel .carousel-control-next {
+        width: 15%;
+        opacity: 0.7;
+    }
+    .kitchen-carousel .carousel-control-prev-icon,
+    .kitchen-carousel .carousel-control-next-icon {
+        background-color: var(--main-color);
+        border-radius: 50%;
+        padding: 15px;
+    }
+    .kitchen-carousel .carousel-indicators {
+        bottom: -40px;
+    }
+    .kitchen-carousel .carousel-indicators li {
+        background-color: var(--main-color);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .kitchen-carousel .carousel-indicators .active {
+        background-color: var(--accent-color);
+    }
+    @media (max-width: 992px) {
+        .navbar-nav {
+            background-color: var(--main-color);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .nav-link {
+            text-align: center;
+            padding: 10px 0 !important;
+            font-size: 1.2rem;
+        }
+        .header-contact-block {
+            align-items: center;
+            margin-top: 15px;
+        }
+        .header-map-container {
+            height: 150px;
+            max-width: 300px;
+        }
+        .contact-info {
+            font-size: 1rem;
+            padding-right: 10px;
+        }
+        .carousel-img {
+            width: 500px;
+            height: 705px;
+        }
+        .carousel-caption {
+            width: 80%;
+            max-width: 400px;
+            padding: 12px 15px;
+        }
+        .carousel-caption h5 {
+            font-size: 1.4rem;
+        }
+        .carousel-caption p {
+            font-size: 0.9rem;
+        }
+        .kitchen-carousel-img {
+            max-width: 500px;
+        }
+        .kitchen-section p {
+            font-size: 1.2rem;
+        }
+        .kitchen-section ul li {
+            font-size: 1.1rem;
+            padding: 10px 0 10px 35px;
+        }
+        .kitchen-section ul li::before {
+            font-size: 1.3rem;
+        }
+    }
+    @media (max-width: 768px) {
+        .logo {
+            width: 150px;
+        }
+        .contact-info {
+            font-size: 0.9rem;
+            white-space: normal;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        .gallery img {
+            height: 180px;
+        }
+        .nav-link, .navbar-brand {
+            font-size: 1.2rem;
+        }
+        body {
+            background-attachment: scroll;
+        }
+        .prices-section, .booking-form, .kitchen-section {
+            padding: 20px;
+        }
+        .carousel-img {
+            width: 400px;
+            height: 564px;
+        }
+        .carousel-caption {
+            width: 80%;
+            max-width: 320px;
+            padding: 10px 12px;
+        }
+        .carousel-caption h5 {
+            font-size: 1.2rem;
+        }
+        .carousel-caption p {
+            font-size: 0.8rem;
+        }
+        .trainings-carousel-section {
+            padding: 40px 0;
+        }
+        .kitchen-carousel-img {
+            max-width: 400px;
+        }
+        .kitchen-section p {
+            font-size: 1.1rem;
+        }
+        .kitchen-section ul li {
+            font-size: 1rem;
+            padding: 8px 0 8px 30px;
+        }
+        .kitchen-section ul li::before {
+            font-size: 1.2rem;
+        }
+    }
+    @media (max-width: 576px) {
+        .contact-info {
+            font-size: 0.8rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+        .gallery img {
+            height: 150px;
+        }
+        .carousel-img {
+            width: 300px;
+            height: 423px;
+        }
+        .carousel-caption {
+            width: 80%;
+            max-width: 240px;
+            padding: 8px 10px;
+        }
+        .carousel-caption h5 {
+            font-size: 1rem;
+        }
+        .carousel-caption p {
+            font-size: 0.7rem;
+        }
+        .carousel-indicators {
+            bottom: -40px;
+        }
+        .kitchen-carousel-img {
+            max-width: 300px;
+        }
+        .kitchen-section p {
+            font-size: 1rem;
+        }
+        .kitchen-section ul li {
+            font-size: 0.9rem;
+            padding: 6px 0 6px 25px;
+        }
+        .kitchen-section ul li::before {
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <header>
+        <div class="container-fluid custom-padding">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <a href="{% url 'index' %}">
+                        <img src="{% static 'image/logo.png' %}" class="logo" alt="Логотип">
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <nav class="navbar navbar-expand-lg main-nav">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav mx-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'index' %}">Главная</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#trainings">Тренировки</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#booking">Бронирование</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#prices">Цены</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#kitchen">Кухня</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'about_us' %}">О нас</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{% url 'tournaments' %}">Турниры</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-md-3">
+                    <div class="header-contact-block">
+                        <div class="contact-info">
+                            8-919-354-52-02<br>Челябинск, ул.Академика Королева 3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <br><br><br>
+
+    <section id="trainings">
+        <div class="container mt-4 gallery">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{% static 'image/77.JPG' %}" alt="Изображение 1">
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static 'image/child.jpg' %}" alt="Изображение 2">
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static 'image/2.JPG' %}" alt="Изображение 3">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{% static 'image/44.JPG' %}" alt="Изображение 4">
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static 'image/3.JPG' %}" alt="Изображение 5">
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static 'image/pool.JPG' %}" alt="Изображение 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center">
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#booking">Бронирование</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="booking">
+        <h2 class="section-title">Заявка на аренду стола</h2>
+        <div class="container">
+            {% if messages %}
+                <div class="alert alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            {% endif %}
+            <div class="booking-form">
+                <form method="POST" action="{% url 'create_booking' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Введите Имя" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Фамилия</label>
+                        <input type="text" class="form-control" id="surname" name="surname" placeholder="Введите Фамилию" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="billiard_type">Тип бильярда</label>
+                        <select class="form-control" id="billiard_type" name="billiard_type" required>
+                            <option value="" disabled selected>Выберите тип бильярда</option>
+                            <option value="russian">Русский бильярд</option>
+                            <option value="american">Американский пул</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Номер телефона</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Введите номер телефона" required>
+                        <small id="phoneHelp" class="form-text text-muted">Обязательно - мы никогда не используем это для маркетинга.</small>
+                    </div>
+                    <br>
+                    <div class="center">
+                        <button type="submit" class="btn btn-primary">Сохранить и Отправить</button>
+                    </div>
+                </form>
+            </div>
+            <br>
+            <div class="center">
+                <img src="{% static 'image/66.JPG' %}" alt="Центрированное изображение" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            </div>
+            <br><br>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center">
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#prices">Цены</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="prices">
+        <h2 class="section-title">Наши цены</h2>
+        <div class="container">
+            <div class="prices-section">
+                <div class="center">
+                    <img src="{% static 'image/price.PNG' %}" alt="Цены на услуги" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px;">
+                </div>
+                <br><br>
+                <div class="center">
+                    <img src="{% static 'image/100.PNG' %}" alt="Дополнительная информация" style="width: 100%; max-width: 600px; height: auto; border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center">
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#kitchen">Кухня</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="kitchen">
+        <h2 class="section-title">Наша кухня</h2>
+        <div class="container">
+            <div class="kitchen-section">
+                <p>В Академии Бильярда вы можете насладиться вкусными закусками и широким выбором напитков. Наше меню включает:</p>
+                <ul>
+                    <li>Закуски: чипсы, орешки, сухарики</li>
+                    <li>Напитки: пиво, лимонады, чай, кофе</li>
+                    <li>Горячие блюда: по предварительному заказу</li>
+                </ul>
+                <div class="kitchen-carousel-section">
+                    <div id="kitchenCarousel" class="carousel slide kitchen-carousel" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#kitchenCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#kitchenCarousel" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{% static 'image/menu1.PNG' %}" class="d-block kitchen-carousel-img" alt="Меню 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'image/menu2.PNG' %}" class="d-block kitchen-carousel-img" alt="Меню 2">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#kitchenCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Предыдущий</span>
+                        </a>
+                        <a class="carousel-control-next" href="#kitchenCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Следующий</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container text-center">
+            <div class="w-100">
+                <a class="navbar-brand text-white" href="#trainings">Тренировки</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="trainingCarouselSection" class="trainings-carousel-section">
+        <div class="container">
+            <h2 class="section-title">Наши тренера</h2>
+            <div id="trainingCarousel" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#trainingCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#trainingCarousel" data-slide-to="1"></li>
+                    <li data-target="#trainingCarousel" data-slide-to="2"></li>
+                    <li data-target="#trainingCarousel" data-slide-to="3"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'image/1tren.png' %}" class="d-block carousel-img" alt="Тренировка 1">
+                        <div class="carousel-caption">
+                            <h5>Обучение бильярду для всех возрастов</h5>
+                            <p>Профессиональные тренировки от Академии Бильярда!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'image/3tren.png' %}" class="d-block carousel-img" alt="Тренировка 2">
+                        <div class="carousel-caption">
+                            <h5>Мастер-классы от чемпионов</h5>
+                            <p>Учите техники от лучших игроков!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'image/4tren.png' %}" class="d-block carousel-img" alt="Тренировка 3">
+                        <div class="carousel-caption">
+                            <h5>Групповые тренировки</h5>
+                            <p>Занимайтесь с друзьями и достигайте новых высот!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'image/77.png' %}" class="d-block carousel-img" alt="Тренировка 4">
+                        <div class="carousel-caption">
+                            <h5>Индивидуальный подход</h5>
+                            <p>Персональные уроки для вашего уровня!</p>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#trainingCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Предыдущий</span>
+                </a>
+                <a class="carousel-control-next" href="#trainingCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Следующий</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function checkWidth() {
+            const navbar = document.querySelector('.navbar');
+            if (window.innerWidth <= 1865) {
+                navbar.classList.remove('navbar-expand-lg');
+                navbar.classList.add('navbar-expand-custom');
+            } else {
+                navbar.classList.add('navbar-expand-lg');
+                navbar.classList.remove('navbar-expand-custom');
+            }
+        }
+        checkWidth();
+        window.addEventListener('resize', checkWidth);
+    });
+</script>
+{% endblock %}

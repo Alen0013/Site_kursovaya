@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Список бронирований - Академия Бильярда{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bookings-container {
+        max-width: 1000px;
+        margin: 50px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .bookings-container h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        color: #006400;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .bookings-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .bookings-table th, .bookings-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    .bookings-table th {
+        background: #006400;
+        color: white;
+        font-weight: bold;
+    }
+    .bookings-table tr:hover {
+        background: #f8f9fa;
+    }
+    @media (max-width: 768px) {
+        .bookings-container {
+            margin: 20px;
+            padding: 20px;
+        }
+        .bookings-container h1 {
+            font-size: 2rem;
+        }
+        .bookings-table th, .bookings-table td {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="bookings-container">
+        <h1>Список бронирований</h1>
+        {% if bookings %}
+            <table class="bookings-table">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Тип бильярда</th>
+                        <th>Телефон</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.name }}</td>
+                            <td>{{ booking.surname }}</td>
+                            <td>{{ booking.get_billiard_type_display }}</td>
+                            <td>{{ booking.phone }}</td>
+                            <td>{{ booking.created_at|date:"d.m.Y H:i" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="text-align: center; font-size: 1.2rem; color: #333;">Бронирования отсутствуют.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
