@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}О нас - Академия Бильярда{% endblock %}
+{% block title %}Политика конфиденциальности - Академия Бильярда{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -61,6 +61,11 @@
     .contact-info a:hover {
         color: var(--main-color);
     }
+    .header-contact-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
     .main-nav {
         background: var(--main-color);
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -94,26 +99,9 @@
     .navbar-toggler {
         border-color: white;
     }
-    .section-title {
-        font-family: 'Playfair Display', serif;
-        text-align: center;
-        font-size: 2.8rem;
-        margin: 40px 0;
-        color: var(--main-color);
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        position: relative;
-    }
-    .section-title::after {
-        content: '';
-        display: block;
-        width: 100px;
-        height: 3px;
-        background: var(--accent-color);
-        margin: 15px auto;
-    }
-    .about-content {
+    .privacy-content {
         max-width: 800px;
-        margin: 0 auto;
+        margin: 40px auto;
         padding: 30px;
         background: white;
         border-radius: 20px;
@@ -121,7 +109,7 @@
         position: relative;
         overflow: hidden;
     }
-    .about-content::before {
+    .privacy-content::before {
         content: '';
         position: absolute;
         top: -50px;
@@ -132,43 +120,57 @@
         border-radius: 50%;
         opacity: 0.1;
     }
-    .highlight-box {
-        background: #f8f9fa;
-        border-radius: 15px;
-        padding: 20px;
+    .privacy-content h1 {
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        font-size: 2.5rem;
+        color: var(--main-color);
         margin-bottom: 20px;
     }
-    .feature-list {
-        list-style: none;
-        padding: 0;
-        margin: 30px 0;
+    .privacy-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--main-color);
+        margin-top: 30px;
+        margin-bottom: 15px;
     }
-    .feature-list li {
-        padding: 15px 20px;
-        margin: 15px 0;
-        background: #f8f9fa;
-        border-left: 4px solid var(--main-color);
-        position: relative;
-        transition: all 0.3s;
-        cursor: pointer;
+    .privacy-content p {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 15px;
     }
-    .feature-list li:hover {
-        transform: translateX(10px);
-        box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    .privacy-content ul {
+        list-style: disc;
+        padding-left: 20px;
+        margin-bottom: 15px;
     }
-    .feature-list li::before {
-        content: '🎱';
-        margin-right: 15px;
-        font-size: 1.2em;
+    .privacy-content ul li {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.6;
+    }
+    .privacy-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+    }
+    .privacy-content a:hover {
+        text-decoration: underline;
     }
     @media (max-width: 992px) {
+        .navbar-nav {
+            background-color: var(--main-color);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .nav-link {
+            text-align: center;
+            padding: 10px 0 !important;
+            font-size: 1.2rem;
+        }
         .contact-info {
             font-size: 1rem;
             padding-right: 10px;
-        }
-        .nav-link {
-            font-size: 1rem;
-            padding: 0 10px;
         }
     }
     @media (max-width: 768px) {
@@ -181,32 +183,28 @@
             text-align: center;
             padding: 10px 0;
         }
-        .section-title {
-            font-size: 2rem;
-        }
-        .about-content {
-            padding: 20px;
-        }
-        .feature-list li {
-            padding: 10px 15px;
-            margin: 10px 0;
-        }
-        .nav-link, .navbar-brand {
-            font-size: 0.9rem;
+        .nav-link {
+            font-size: 1.2rem;
         }
         body {
             background-attachment: scroll;
+        }
+        .privacy-content {
+            padding: 20px;
+        }
+        .privacy-content h1 {
+            font-size: 2rem;
+        }
+        .privacy-content h2 {
+            font-size: 1.5rem;
+        }
+        .privacy-content p, .privacy-content ul li {
+            font-size: 0.9rem;
         }
     }
     @media (max-width: 576px) {
         .contact-info {
             font-size: 0.8rem;
-        }
-        .section-title {
-            font-size: 1.8rem;
-        }
-        .feature-list li {
-            padding: 8px 12px;
         }
     }
 </style>
@@ -245,7 +243,7 @@
                                     <a class="nav-link text-white" href="{% url 'index' %}#kitchen">Кухня</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white active" href="{% url 'about_us' %}">О нас</a>
+                                    <a class="nav-link text-white" href="{% url 'about_us' %}">О нас</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="{% url 'tournaments' %}">Турниры</a>
@@ -255,49 +253,52 @@
                     </nav>
                 </div>
                 <div class="col-md-3">
-                    <div class="contact-info">
-                        <a href="tel:+73512163336">+7 (351) 216-33-36</a><br>Челябинск, ул.Академика Королева 3
+                    <div class="header-contact-block">
+                        <div class="contact-info">
+                            <a href="tel:+73512163336">+7 (351) 216-33-36</a><br>Челябинск, ул.Академика Королева 3
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section class="about-content">
-        <h1 class="section-title">О нашей академии</h1>
-        <p class="lead">Академия бильярда открылась в 2009 году и за это время стала домом для многих любителей и профессиональных спортсменов бильярдного мира.</p>
-        <div class="highlight-box">
-            <p class="mb-0">Это особое место, где каждый чувствует себя комфортно и хорошо. Нам удалось создать атмосферу, в которой гармонично сочетаются спорт и отдых.</p>
-        </div>
-        <ul class="feature-list">
-            <li>2 зала для игры</li>
-            <li>7 столов русского бильярда</li>
-            <li>3 американского пула</li>
-            <li>Кинозал для просмотра спортивных трансляций, романтических свиданий и закрытых мероприятий</li>
-            <li>Закрытое пространство для праздников с отдельно стоящим американским пулом</li>
-            <li>Закуски и широкий выбор пенного</li>
-            <li>Индивидуальные тренировки для детей и взрослых</li>
-            <li>Дружелюбный персонал</li>
-        </ul>
-    </section>
-</div>
-{% endblock %}
+    <div class="privacy-content">
+        <h1>Политика конфиденциальности</h1>
+        <p>Настоящая Политика конфиденциальности регулирует порядок обработки и защиты персональных данных пользователей сайта Академии Бильярда (далее — Оператор) в соответствии с Федеральным законом № 152-ФЗ «О персональных данных».</p>
 
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function checkWidth() {
-            const navbar = document.querySelector('.navbar');
-            if (window.innerWidth <= 1865) {
-                navbar.classList.remove('navbar-expand-lg');
-                navbar.classList.add('navbar-expand-custom');
-            } else {
-                navbar.classList.add('navbar-expand-lg');
-                navbar.classList.remove('navbar-expand-custom');
-            }
-        }
-        checkWidth();
-        window.addEventListener('resize', checkWidth);
-    });
-</script>
+        <h2>1. Какие данные собираются</h2>
+        <p>Оператор собирает следующие персональные данные пользователей:</p>
+        <ul>
+            <li>Имя и фамилия;</li>
+            <li>Номер телефона;</li>
+            <li>Тип бильярда (в рамках бронирования).</li>
+        </ul>
+
+        <h2>2. С какой целью</h2>
+        <p>Собранные данные используются исключительно для:</p>
+        <ul>
+            <li>Обработки заявок на бронирование столов;</li>
+            <li>Связь с пользователем для подтверждения бронирования;</li>
+            <li>Предоставления информации о статусе бронирования.</li>
+        </ul>
+
+        <h2>3. Как хранятся и защищаются</h2>
+        <p>Персональные данные хранятся в зашифрованном виде на защищенных серверах Оператора. Применяются следующие меры защиты:</p>
+        <ul>
+            <li>Шифрование данных с использованием современных алгоритмов;</li>
+            <li>Ограничение доступа к данным для уполномоченных сотрудников;</li>
+            <li>Регулярное обновление программного обеспечения и мониторинг безопасности.</li>
+        </ul>
+        <p>Срок хранения данных составляет 1 год с момента последней активности пользователя, после чего они удаляются, если не продлено согласие.</p>
+
+        <h2>4. Кому передаются</h2>
+        <p>Персональные данные не передаются третьим лицам, за исключением случаев, предусмотренных законодательством Российской Федерации (например, по запросу уполномоченных государственных органов).</p>
+
+        <h2>5. Как пользователь может отозвать согласие</h2>
+        <p>Пользователь имеет право отозвать согласие на обработку персональных данных, направив письменное уведомление на электронный адрес <a href="mailto:info@academy-billiard.ru">info@academy-billiard.ru</a> или обратившись лично по адресу: Челябинск, ул. Академика Королева 3. После отзыва согласия данные будут удалены в течение 10 рабочих дней, если это не противоречит законодательным требованиям.</p>
+
+        <p>Обновлено: 04 мая 2025 года.</p>
+    </div>
+</div>
 {% endblock %}

@@ -168,6 +168,22 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <!-- Messages -->
+    <div class="container mt-3">
+        {% if messages %}
+            <div class="alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} mb-0">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
     <div class="content-wrapper">
         {% block content %}{% endblock %}
     </div>
@@ -191,7 +207,7 @@
                     <h4 class="footer-title">Контакты</h4>
                     <div class="footer-contacts">
                         <div class="mb-3">
-                            <i class="fas fa-phone-alt"></i> <a href="tel:+89193545202">8-919-354-52-02</a>
+                            <i class="fas fa-phone-alt"></i> <a href="tel:+73512163336">+7 (351) 216-33-36</a>
                         </div>
                         <div class="mb-3">
                             <i class="fas fa-map-marker-alt"></i> Челябинск, ул. Академика Королева 3

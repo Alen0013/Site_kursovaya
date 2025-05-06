@@ -53,6 +53,14 @@
         white-space: nowrap;
         padding-right: 20px;
     }
+    .contact-info a {
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .contact-info a:hover {
+        color: var(--main-color);
+    }
     .header-contact-block {
         display: flex;
         flex-direction: column;
@@ -566,7 +574,7 @@
                 <div class="col-md-3">
                     <div class="header-contact-block">
                         <div class="contact-info">
-                            8-919-354-52-02<br>Челябинск, ул.Академика Королева 3
+                            <a href="tel:+73512163336">+7 (351) 216-33-36</a><br>Челябинск, ул.Академика Королева 3
                         </div>
                     </div>
                 </div>
@@ -616,7 +624,9 @@
             {% if messages %}
                 <div class="alert alert-dismissible fade show" role="alert">
                     {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        <div class="alert alert-{{ message.tags }} mb-0">
+                            {{ message }}
+                        </div>
                     {% endfor %}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -624,7 +634,7 @@
                 </div>
             {% endif %}
             <div class="booking-form">
-                <form method="POST" action="{% url 'create_booking' %}">
+                <form method="POST" action="{% url 'bookings:create_booking' %}">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="name">Имя</label>
@@ -647,6 +657,13 @@
                         <label for="phone">Номер телефона</label>
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Введите номер телефона" required>
                         <small id="phoneHelp" class="form-text text-muted">Обязательно - мы никогда не используем это для маркетинга.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="agree_privacy" id="agree_privacy" required>
+                            Я согласен на обработку моих персональных данных в соответствии с Политикой конфиденциальности
+                            <a href="{% url 'privacy_policy' %}" target="_blank">Политикой конфиденциальности</a>
+                        </label>
                     </div>
                     <br>
                     <div class="center">

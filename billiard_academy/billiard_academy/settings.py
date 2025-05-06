@@ -101,3 +101,8 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # Тип поля первичного ключа по умолчанию
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Настройки авторизации
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/tournaments/'
+LOGOUT_REDIRECT_URL = '/tournaments/'
